@@ -11,7 +11,7 @@ def make_statement(statement, decoration):
     """Emphasises headings by adding decoration
      at the start and end"""
 
-    print(f"{decoration * 3} {statement} {decoration * 3}")
+    return f"{decoration * 3} {statement} {decoration * 3}"
 
 
 def yes_no(question):
@@ -71,10 +71,10 @@ def which_t():
         response = input("Did you mean triangle? ").lower()
 
         # verification if its triangle
-        # if no it's trapezium
+        #If the response is yes its triangle
         if response == "yes" or response == "y":
             return "triangle"
-
+        # If the response is no it's trapezium
         elif response == "no" or response == "n":
             return "trapezium"
 
@@ -113,6 +113,11 @@ def num_check(question, num_type, exit_code=None):
             print(error)
 
 
+def round_up(amount, round_val):
+    """Rounds amount to desired whole number"""
+    return int(math.ceil(amount / round_val)) * round_val
+
+
 # Main routine go here
 yes_no_list = ['yes', 'no']
 shapes_list = ['circle', 'square', 'rectangle', 'parallelogram', 'triangle', 'trapezium']
@@ -139,16 +144,18 @@ question_dict = {
 # Set to be defined
 area_result = np.nan
 perimeter_result = np.nan
+amount = [area_result, perimeter_result]
+
 # Program main heading
 make_statement("Area and Perimeter Calculator", "🔢")
 
-# # loop for testing purposes
 print()
 want_instructions = yes_no("Do you want to see the instructions? ")
 
 if want_instructions == "yes":
     instructions()
 
+# Get dimensions and calculate
 while True:
 
     question_heading = f"\n❓❓🔢 Question {question_asked + 1} 🔢❓❓"
@@ -307,12 +314,11 @@ while True:
             area_result = 0.5 * (base_a_dimension + base_b_dimension) * height_dimension
             perimeter_result = s1_dimension + s2_dimension + base_a_dimension + base_b_dimension
 
-
-    question_asked += 1
-
     all_shapes.append(entered_shape.capitalize())
     all_area.append(area_result)
     all_perimeter.append(perimeter_result)
+
+    question_asked += 1
 
 
 
@@ -327,8 +333,8 @@ result_string = tabulate(result_frame, headers='keys',
 result_panda_string = result_string
 
 
-
 # strings / output area
+
 
 # **** Get current date for heading and filename ****
 today = date.today()
@@ -339,42 +345,37 @@ month = today.strftime("%m")
 year = today.strftime("%Y")
 
 # Headings / Strings...
-main_heading_string = make_statement(f"Area & Perimeter Calculator "
-                                     f"({day}/{month}/{year})", "=")
+main_heading_string = make_statement("Area & Perimeter Calculator ", "=")
+result_heading_string = make_statement("Result Details", "-")
 
-result_details_string = make_statement("Result Details", "-")
-
-equations_details = ('''       Area & Perimeter Equations
-                                       Area                |   Perimeter
-                     Circle:            πr²                    2πr
-                     Square:         length²                 4 x length 
-                     Rectangle:      length x width          2(length + width)
-                     Triangle:       ½ base x height         s1 + s2 + s3
-                                    (Use heron's law)     
-                     
-                     Parallelogram: Base x height            2(side1 + side2)
-                     Trapezium:     ½(base1 + base2)height   s1 + s2 + s3+ s4
-                                                                                    ''')
-
-
-
+equation_details_heading = make_statement("Area & Perimeter Equations", "=")
+equations_details = \
+('''                     Area                           Perimeter
+Square:              length^2                       4 x length 
+Rectangle:           length x width                 2(length + width)
+Circle:              pi(3.14...) x r^2              2x pi(3.14...) x r
+Triangle:            0.5 x base x height            s1 + s2 + s3   
+Parallelogram:       Base x height                  2(side1 + side2)
+Trapezium:           0.5 x (base1 + base2)x height  s1 + s2 + s3+ s4
+     ''')
 
 # Print area
+
+# List of strings to be outputted / written to file
+to_write = [main_heading_string, "\n",result_heading_string,
+             result_panda_string, equation_details_heading,
+            "\n", equations_details]
+
+# print the output...
+print()
+for item in to_write:
+    print(item)
 
 # create file to hold data (add .txt extension)
 file_name = f"Area_Perimeter_calc_{year}_{month}_{day}"
 write_to = "{}.txt".format(file_name)
 
 text_file = open(write_to, "w+")
-
-# List of strings to be outputted / written to file
-to_write = [main_heading_string, result_details_string,
-            "\n"< result_panda_string]
-
-# print the output...
-print()
-for item in to_write:
-    print(item)
 
 # write the item to file
 for item in to_write:
