@@ -100,12 +100,16 @@ def num_check(question, num_type, exit_code=None):
         if response == exit_code:
             return response
 
+        elif response == "":
+            print(error)
+
         try:
             # Change the response to an integer and check that it's more than zero
             response = change_to(response)
 
             if response > 0:
                 return response
+
             else:
                 print(error)
 
@@ -116,6 +120,7 @@ def num_check(question, num_type, exit_code=None):
 def round_up(amount, round_val):
     """Rounds amount to desired whole number"""
     return int(math.ceil(amount / round_val)) * round_val
+
 
 
 # Main routine go here
@@ -138,8 +143,6 @@ question_dict = {
     "Area": all_area,
     "Perimeter": all_perimeter
 }
-
-
 
 # Set to be defined
 area_result = np.nan
@@ -192,7 +195,7 @@ while True:
     # Get dimension of rectangle
     elif entered_shape == "rectangle":
         # get the dimensions
-        length_dimension = num_check("Enter the length: ",
+        length_dimension = num_check("Enter the length? ",
                                      "float", "")
         width_dimension = num_check("Enter the width? ",
                                     "float", "")
@@ -320,10 +323,12 @@ while True:
 
     question_asked += 1
 
-
+print()
+round_to = num_check("Round to: ", "integer")
 
 # make  panda
-result_frame = pandas.DataFrame(question_dict)
+result_frame =  np.round(pandas.DataFrame(question_dict), round_to)
+
 
 # make the results frame into a string with the desired columns
 result_string = tabulate(result_frame, headers='keys',
@@ -351,9 +356,9 @@ result_heading_string = make_statement("Result Details", "-")
 equation_details_heading = make_statement("Area & Perimeter Equations", "=")
 equations_details = \
 ('''                     Area                           Perimeter
-Square:              length^2                       4 x length 
+Square:              length²                        4 x length 
 Rectangle:           length x width                 2(length + width)
-Circle:              pi(3.14...) x r^2              2x pi(3.14...) x r
+Circle:              pi(3.14...) x r²               2x pi(3.14...) x r
 Triangle:            0.5 x base x height            s1 + s2 + s3   
 Parallelogram:       Base x height                  2(side1 + side2)
 Trapezium:           0.5 x (base1 + base2)x height  s1 + s2 + s3+ s4
