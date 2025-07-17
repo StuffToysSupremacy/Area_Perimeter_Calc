@@ -88,12 +88,12 @@ def num_check(question, num_type, exit_code=None):
     """Checks users enter an integer / float that is more than
     zero (or the optional exit code)"""
 
+    change_to = float
     if num_type == "integer":
         error = "Oops - please enter an integer more than zero."
         change_to = int
     else:
         error = "Oops - please enter a number more than zero."
-        change_to = float
 
     while True:
         response = input(question).lower()
@@ -150,8 +150,13 @@ while True:
 
     question_heading = f"\n❓❓🔢 Question {question_asked + 1} 🔢❓❓"
     print(question_heading)
-    entered_shape = string_check("What is the shape? ", shapes_list, 1
-                                 )
+    entered_shape = string_check("What is the shape? ", shapes_list, 1)
+
+    if entered_shape == "xxx" and len(all_shapes) == 0:
+        print("Oops - you have not entered anything. "
+                  "You need at least one shape")
+        continue
+
     # if name is exit code, break out of loop
     if entered_shape == "xxx":
         break
@@ -159,60 +164,61 @@ while True:
     # get the dimensions of the shape
     # Get dimension of square
     elif entered_shape == "square":
+        # Get side length dimension
         length_dimension = num_check("What is the side length? ",
-                                     "float", "")
+                                     "float")
 
         area_result = length_dimension ** 2
         perimeter_result = length_dimension * 4
 
     # Get dimension of circle
     elif entered_shape == "circle":
-        # get the radius  
+        # get the radius dimension
         radius_dimension = num_check("What is the radius? ",
-                                     "float", "")
+                                     "float")
 
         area_result = math.pi * (radius_dimension ** 2)
         perimeter_result = 2 * math.pi * radius_dimension
 
     # Get dimension of rectangle
     elif entered_shape == "rectangle":
-        # get the dimensions  
-        length_dimension = num_check("Enter the length: ",
-                                     "float", "")
+        # get the dimensions
+        length_dimension = num_check("Enter the length? ",
+                                     "float")
         width_dimension = num_check("Enter the width? ",
-                                    "float", "")
+                                    "float")
 
         area_result = length_dimension * width_dimension
         perimeter_result = 2 * (length_dimension + width_dimension)
 
     # Get dimension of parallelogram
     elif entered_shape == "parallelogram":
-        # get the dimensions  
+        # get the dimensions
         calc_chosen = string_check("Do you want to do area, perimeter or both? ", calc_type_list, 1)
 
         if calc_chosen == "area":
             height_dimension = num_check("Height? ",
-                                         "float", "")
+                                         "float")
             base_dimension = num_check("Base? ",
-                                       "float", "")
+                                       "float")
 
             area_result = base_dimension * height_dimension
 
         elif calc_chosen == "perimeter":
             length_dimension = num_check("Length? ",
-                                         "float", "")
+                                         "float")
             width_dimension = num_check("Width? ",
-                                        "float", "")
+                                        "float")
 
             perimeter_result = 2 * (length_dimension + width_dimension)
 
         else:
             base_dimension = num_check("Base? ",
-                                       "float", "")
+                                       "float")
             height_dimension = num_check("Height? ",
-                                         "float", "")
+                                         "float")
             length_dimension = num_check("Side?(not base side) ",
-                                         "float", "")
+                                         "float")
 
             area_result = base_dimension * height_dimension
             perimeter_result = 2 * (length_dimension + base_dimension)
@@ -220,25 +226,25 @@ while True:
 
     # Get dimension of triangle
     elif entered_shape == "triangle":
-        # get the dimensions  
+        # get the dimensions
         calc_chosen = string_check("Do you want to do area, perimeter or both? ", calc_type_list, 1)
 
         if calc_chosen == "area":
             height_dimension = num_check("Height? ",
-                                         "float", "")
+                                         "float")
             base_dimension = num_check("Base? ",
-                                       "float", "")
+                                       "float")
 
             area_result = 0.5 * base_dimension * height_dimension
             perimeter_result = np.nan
 
         elif calc_chosen == "perimeter":
             s1_dimension = num_check("Side 1? ",
-                                            "float", "")
+                                            "float")
             s2_dimension = num_check("Side 2? ",
-                                         "float", "")
+                                         "float")
             s3_dimension = num_check("Side 3? ",
-                                         "float", "")
+                                         "float")
 
             perimeter_result = s1_dimension + s2_dimension + s3_dimension
 
@@ -246,11 +252,11 @@ while True:
             # get sides dimension for perimeter
             # use heron's formula to get area
             s1_dimension = num_check("Side 1? ",
-                                     "float", "")
+                                     "float")
             s2_dimension = num_check("Side 2? ",
-                                     "float", "")
+                                     "float")
             s3_dimension = num_check("Side 3? ",
-                                     "float", "")
+                                     "float")
 
             perimeter_result = s1_dimension + s2_dimension + s3_dimension
             s = perimeter_result * 0.5
@@ -259,52 +265,45 @@ while True:
 
     # Get dimension of trapezium
     else:
-        # get the dimensions  
+        # get the dimensions
         calc_chosen = string_check("Do you want to do area, perimeter or both? ", calc_type_list, 1)
 
         if calc_chosen == "area":
             height_dimension = num_check("Height? ",
-                                         "float", "")
+                                         "float")
             base_a_dimension = num_check("Base (A)? ",
-                                         "float", "")
+                                         "float")
             base_b_dimension = num_check("Base (B)? ",
-                                         "float", "")
+                                         "float")
 
             area_result = 0.5 * (base_a_dimension + base_b_dimension) * height_dimension
 
         elif  calc_chosen == "perimeter":
             s1_dimension = num_check("Side 1? ",
-                                         "float", "")
+                                     "float")
             s2_dimension = num_check("Side 2? ",
-                                         "float", "")
+                                         "float")
             s3_dimension = num_check("Side 3? ",
-                                         "float", "")
+                                         "float")
             s4_dimension = num_check("Side 4? ",
-                                         "float", "")
+                                         "float")
 
             perimeter_result = s1_dimension + s2_dimension + s3_dimension + s4_dimension
 
         else:
             height_dimension = num_check("Height? ",
-                                         "float", "")
+                                         "float")
             base_a_dimension = num_check("Base (A)? ",
-                                         "float", "")
+                                         "float")
             base_b_dimension = num_check("Base (B)? ",
-                                         "float", "")
+                                         "float")
             s1_dimension = num_check("Side 1?(not base) ",
-                                     "float", "")
+                                     "float")
             s2_dimension = num_check("Side 2?(not base) ",
-                                     "float", "")
+                                     "float")
 
             area_result = 0.5 * (base_a_dimension + base_b_dimension) * height_dimension
             perimeter_result = s1_dimension + s2_dimension + base_a_dimension + base_b_dimension
-
-
-    question_asked += 1
-
-    all_shapes.append(entered_shape.capitalize())
-    all_area.append(area_result)
-    all_perimeter.append(perimeter_result)
 
 # make  panda
 result_frame = pandas.DataFrame(question_dict)

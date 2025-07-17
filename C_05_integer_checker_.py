@@ -34,15 +34,15 @@ def num_check(question, num_type, exit_code=None):
 
 # loop for testing purposes...
 while True:
-    my_int = num_check("How many questions would you like? <enter> for infinite: ",
-                       "integer", "")
-
-    if my_int == "":
-        print("You have chosen infinite mode.")
-    else:
-        print(f"Thanks. You chose {my_int}")
-
-    print()
+    # my_int = num_check("How many questions would you like? <enter> for infinite: ",
+    #                    "integer", "")
+    #
+    # if my_int == "":
+    #     print("You have chosen infinite mode.")
+    # else:
+    #     print(f"Thanks. You chose {my_int}")
+    #
+    # print()
 
     my_float = num_check("Please enter the length: ", "float")
     print(f"Thanks. You chose {my_float}")
