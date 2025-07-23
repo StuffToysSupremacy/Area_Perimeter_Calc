@@ -46,9 +46,6 @@ def instructions():
     After you are done with it, you can use an exit code ('xxx'). 
     The program would then show the results along with the equations 
     used for all the shapes below the table.
-    
-    
-
         ''')
 
 
